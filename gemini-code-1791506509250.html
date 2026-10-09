@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ロンドン探偵">
+    <title>19世紀ロンドン探偵事件簿 第1話</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-gold: #c9a050;
+            --text-main: #e0e0e0;
+            --text-sub: #a0a0a0;
+            --border-color: #333333;
+            --correct-green: #2e7d32;
+            --wrong-red: #c62828;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "SF Pro Display", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        #app {
+            width: 100%;
+            max-width: 440px;
+            height: 100vh;
+            max-height: 900px;
+            background-color: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            border-radius: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (min-width: 440px) {
+            #app {
+                height: 92vh;
+                border-radius: 20px;
+                border: 1px solid var(--border-color);
+            }
+        }
+
+        /* Header */
+        header {
+            background-color: #0d0d0d;
+            padding: 20px 16px 12px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        header .subtitle {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            margin-top: 4px;
+        }
+
+        /* Main Content Area */
+        main {
+            flex: 1;
+            padding: 20px 18px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Status Badge */
+        .badge-container {
+            display: flex;
+            gap: 8px;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background-color: #2a2a2a;
+            color: var(--accent-gold);
+            border: 1px solid #444;
+            font-weight: bold;
+        }
+
+        /* Story Text Area */
+        .story-card {
+            background-color: #262626;
+            border-radius: 12px;
+            padding: 16px;
+            border-left: 4px solid var(--accent-gold);
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: #f0f0f0;
+            min-height: 120px;
+        }
+
+        .dialogue {
+            background-color: #1a2228;
+            border-left-color: #4a90e2;
+            font-style: italic;
+        }
+
+        .feedback-card {
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .feedback-card.correct {
+            display: block;
+            background-color: rgba(46, 125, 50, 0.2);
+            border: 1px solid var(--correct-green);
+            color: #81c784;
+        }
+
+        .feedback-card.wrong {
+            display: block;
+            background-color: rgba(198, 40, 40, 0.2);
+            border: 1px solid var(--wrong-red);
+            color: #e57373;
+        }
+
+        /* Options Area */
+        .options-container {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-shrink: 0;
+            padding-bottom: 10px;
+        }
+
+        .btn-option {
+            background-color: #2a2a2a;
+            color: var(--text-main);
+            border: 1px solid #444;
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 0.9rem;
+            text-align: left;
+            line-height: 1.4;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .btn-option:active {
+            transform: scale(0.98);
+            background-color: #383838;
+        }
+
+        .btn-tag {
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-next {
+            background-color: var(--accent-gold);
+            color: #121212;
+            font-weight: bold;
+            text-align: center;
+            justify-content: center;
+            border: none;
+            padding: 16px;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 4px;
+            background-color: #222;
+            width: 100%;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent-gold);
+            width: 25%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="progress-bar">
+        <div id="progress" class="progress-fill"></div>
+    </div>
+
+    <header>
+        <h1>19世紀ロンドン探偵事件簿</h1>
+        <div class="subtitle">第1話：深夜の紡績工場盗難事件</div>
+    </header>
+
+    <main>
+        <div class="badge-container">
+            <span id="phase-badge" class="badge">SCENE 1: 現場検証</span>
+        </div>
+
+        <div id="story-box" class="story-card">
+            1840年、霧の深まるロンドン東部。巨大な紡績工場の事務所から金品が盗まれた。<br><br>
+            容疑者は15歳の少年ジャック。工場長は「夜中に忍び込んで盗みを働いたに違いない」と主張している。<br><br>
+            現場の記録簿を確認したところ、何か違和感がある…
+        </div>
+
+        <div id="feedback-box" class="feedback-card"></div>
+
+        <div id="options-box" class="options-container">
